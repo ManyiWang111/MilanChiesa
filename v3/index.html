@@ -7,227 +7,251 @@
   <link rel="icon" type="image/png" href="https://www.milanchiesa.com/assets/icons/icon-512x512.png">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
     body {
       font-family: "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", -apple-system, sans-serif;
-      color: #E8E8E8; line-height: 1.6; background: #0F0F1A;
+      color: #E8E8E8; line-height: 1.6; background: #08080F;
     }
 
     /* Navigation */
     .navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(15, 15, 26, 0.85); backdrop-filter: blur(16px);
-      padding: 0 40px; height: 60px;
+      background: transparent; padding: 0 40px; height: 60px;
       display: flex; align-items: center; justify-content: space-between;
-      transition: background 0.3s;
+      transition: background 0.4s;
     }
-    .navbar.scrolled { background: rgba(15, 15, 26, 0.98); }
+    .navbar.scrolled { background: rgba(8,8,15,0.95); backdrop-filter: blur(20px); }
     .navbar .logo-text { color: #E8E8E8; height: 32px; width: auto; display: block; }
     .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { color: rgba(232,232,232,0.6); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a { color: rgba(232,232,232,0.5); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: #FF6B6B; }
     .hamburger { display: none; background: none; border: none; color: #E8E8E8; font-size: 24px; cursor: pointer; }
 
-    /* Hero */
+    /* Hero - Split Layout */
     .hero {
-      min-height: 100vh;
-      background: #0F0F1A;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; color: #E8E8E8; padding: 0 20px;
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
       position: relative; overflow: hidden;
     }
-    .hero::before {
-      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(255,107,107,0.08) 0%, transparent 40%),
-                  radial-gradient(circle at 70% 50%, rgba(78,205,196,0.06) 0%, transparent 40%);
-      animation: heroGlow 8s ease-in-out infinite alternate;
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 60px; z-index: 1;
     }
-    @keyframes heroGlow {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(-5%, 3%); }
-    }
-    .hero > * { position: relative; z-index: 1; }
-    .hero .logo-mark { width: 100px; height: 100px; margin-bottom: 24px; color: #FF6B6B; }
-    .hero h1 { font-size: 56px; font-weight: 800; margin-bottom: 12px; letter-spacing: -1px; }
-    .hero .subtitle { font-size: 22px; color: rgba(232,232,232,0.5); margin-bottom: 40px; font-weight: 300; }
-    .hero .cta-group { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-    .hero .cta-btn {
-      padding: 16px 36px; border-radius: 8px; font-size: 16px; font-weight: 700;
-      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .cta-btn:hover { transform: translateY(-2px); }
-    .cta-primary {
-      background: #FF6B6B; color: #0F0F1A;
-      box-shadow: 0 4px 24px rgba(255,107,107,0.3);
-    }
-    .cta-primary:hover { box-shadow: 0 8px 40px rgba(255,107,107,0.5); }
-    .cta-secondary { background: transparent; color: #E8E8E8; border: 2px solid rgba(232,232,232,0.2); }
-    .cta-secondary:hover { border-color: #4ECDC4; color: #4ECDC4; }
-
-    /* Sections */
-    .section { padding: 120px 40px; max-width: 1100px; margin: 0 auto; }
-    .section-title { font-size: 36px; font-weight: 800; text-align: center; margin-bottom: 12px; }
-    .section-subtitle { text-align: center; color: rgba(232,232,232,0.4); margin-bottom: 60px; font-size: 16px; }
-
-    /* About - Cards with gradient borders */
-    .about-text { max-width: 700px; margin: 0 auto 60px; text-align: center; font-size: 17px; color: rgba(232,232,232,0.7); line-height: 1.8; }
-    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .value-card {
-      background: #1A1A2E; border-radius: 16px; padding: 32px 20px; text-align: center;
-      position: relative; transition: transform 0.2s;
-      border: 1px solid rgba(232,232,232,0.06);
-    }
-    .value-card::before {
-      content: ''; position: absolute; inset: -1px; border-radius: 16px; z-index: -1;
-      background: linear-gradient(135deg, rgba(255,107,107,0.3), rgba(78,205,196,0.3));
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .value-card:hover { transform: scale(1.03); }
-    .value-card:hover::before { opacity: 1; }
-    .value-card .icon { font-size: 36px; margin-bottom: 12px; }
-    .value-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .value-card p { font-size: 14px; color: rgba(232,232,232,0.5); }
-
-    /* Timeline */
-    .timeline { position: relative; max-width: 600px; margin: 0 auto; }
-    .timeline::before {
-      content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
-      background: linear-gradient(to bottom, #FF6B6B, #4ECDC4); transform: translateX(-50%);
-      opacity: 0.3;
-    }
-    .timeline-item {
-      position: relative; padding: 20px 0;
-      display: flex; align-items: flex-start;
-    }
-    .timeline-item:nth-child(odd) { flex-direction: row; }
-    .timeline-item:nth-child(even) { flex-direction: row-reverse; }
-    .timeline-item .content {
-      width: 45%; padding: 20px; background: #1A1A2E; border-radius: 12px;
-      border: 1px solid rgba(232,232,232,0.06);
-    }
-    .timeline-item:nth-child(odd) .content { margin-right: auto; text-align: right; }
-    .timeline-item:nth-child(even) .content { margin-left: auto; text-align: left; }
-    .timeline-item .year {
-      position: absolute; left: 50%; transform: translateX(-50%);
-      background: #FF6B6B; color: #0F0F1A; padding: 4px 12px; border-radius: 20px;
-      font-size: 13px; font-weight: 700;
-    }
-    .timeline-item h3 { font-size: 16px; margin-bottom: 4px; }
-    .timeline-item p { font-size: 14px; color: rgba(232,232,232,0.5); }
-
-    /* Vision */
-    .vision-section {
-      background: #0A0A15; text-align: center; padding: 120px 40px;
+    .hero-right {
+      display: flex; align-items: center; justify-content: center;
       position: relative;
     }
-    .vision-section .section-title { color: #E8E8E8; }
-    .vision-section .section-subtitle { color: rgba(232,232,232,0.3); }
+    .hero-right::before {
+      content: ''; position: absolute; width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,107,107,0.15) 0%, rgba(78,205,196,0.08) 50%, transparent 70%);
+      border-radius: 50%; filter: blur(60px);
+      animation: pulse 4s ease-in-out infinite alternate;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+    .hero-right .logo-mark { width: 200px; height: 200px; color: rgba(255,107,107,0.8); z-index: 1; }
+    .hero-tag { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #FF6B6B; margin-bottom: 24px; }
+    .hero h1 { font-size: 64px; font-weight: 900; line-height: 1.1; margin-bottom: 20px; letter-spacing: -2px; }
+    .hero h1 span { display: block; background: linear-gradient(135deg, #FF6B6B, #4ECDC4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero .subtitle { font-size: 18px; color: rgba(232,232,232,0.4); margin-bottom: 40px; max-width: 400px; }
+    .hero .cta-group { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero .cta-btn {
+      padding: 16px 36px; border-radius: 50px; font-size: 14px; font-weight: 700;
+      text-decoration: none; transition: all 0.3s; letter-spacing: 0.5px;
+    }
+    .cta-primary {
+      background: #FF6B6B; color: #08080F;
+      box-shadow: 0 0 30px rgba(255,107,107,0.3);
+    }
+    .cta-primary:hover { box-shadow: 0 0 50px rgba(255,107,107,0.5); transform: scale(1.05); }
+    .cta-secondary { background: transparent; color: #E8E8E8; border: 1px solid rgba(232,232,232,0.2); }
+    .cta-secondary:hover { border-color: #4ECDC4; color: #4ECDC4; }
+
+    /* Full-width section dividers */
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,107,107,0.3), rgba(78,205,196,0.3), transparent); margin: 0 40px; }
+
+    /* About - Stats + Split */
+    .about-section { padding: 120px 0; }
+    .about-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-left .section-label { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #FF6B6B; margin-bottom: 16px; }
+    .about-left h2 { font-size: 40px; font-weight: 900; line-height: 1.2; margin-bottom: 24px; letter-spacing: -1px; }
+    .about-left p { font-size: 16px; color: rgba(232,232,232,0.5); line-height: 1.8; }
+    .about-right { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .stat-card {
+      background: linear-gradient(135deg, rgba(26,26,46,0.8), rgba(22,22,42,0.8));
+      border: 1px solid rgba(232,232,232,0.04); border-radius: 16px; padding: 32px 24px;
+      text-align: center; transition: transform 0.3s, border-color 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-4px); border-color: rgba(255,107,107,0.2); }
+    .stat-card .icon { font-size: 32px; margin-bottom: 12px; }
+    .stat-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .stat-card p { font-size: 13px; color: rgba(232,232,232,0.4); }
+
+    /* History - Big Year Display */
+    .history-section { padding: 120px 0; background: #0C0C18; }
+    .history-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+    .history-header { text-align: center; margin-bottom: 80px; }
+    .history-header .section-label { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #4ECDC4; margin-bottom: 16px; }
+    .history-header h2 { font-size: 40px; font-weight: 900; letter-spacing: -1px; }
+    .history-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .history-cell {
+      background: rgba(15,15,26,0.6); padding: 40px 32px; position: relative;
+      transition: background 0.3s;
+    }
+    .history-cell:hover { background: rgba(255,107,107,0.05); }
+    .history-cell .year {
+      font-size: 48px; font-weight: 900; letter-spacing: -2px;
+      background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .history-cell h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .history-cell p { font-size: 14px; color: rgba(232,232,232,0.4); line-height: 1.6; }
+
+    /* Vision - Fullscreen Quote */
+    .vision-section {
+      min-height: 80vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 120px 60px; text-align: center;
+      position: relative;
+    }
+    .vision-section::before {
+      content: '"'; position: absolute; top: 60px; left: 50%; transform: translateX(-50%);
+      font-size: 200px; font-weight: 900; color: rgba(255,107,107,0.06); line-height: 1;
+      font-family: Georgia, serif;
+    }
+    .vision-section .section-label { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #FF6B6B; margin-bottom: 40px; }
     .vision-quote {
-      max-width: 800px; margin: 0 auto;
-      font-size: 28px; font-weight: 700; line-height: 1.6;
+      max-width: 700px; font-size: 32px; font-weight: 800; line-height: 1.5;
       letter-spacing: -0.5px;
     }
-    .vision-quote span { color: #FF6B6B; }
-    .vision-verse { margin-top: 32px; font-size: 15px; color: #4ECDC4; }
+    .vision-quote em { font-style: normal; color: #4ECDC4; }
+    .vision-verse { margin-top: 40px; font-size: 14px; color: rgba(232,232,232,0.3); letter-spacing: 1px; }
 
-    /* Team */
-    .team-leader { text-align: center; margin-bottom: 48px; }
-    .team-leader .avatar {
-      width: 120px; height: 120px; border-radius: 50%;
-      background: #1A1A2E; margin: 0 auto 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 48px; color: rgba(232,232,232,0.3);
-      border: 2px solid rgba(255,107,107,0.3);
+    /* Team - Horizontal Cards */
+    .team-section { padding: 120px 0; background: #0C0C18; }
+    .team-header { text-align: center; padding: 0 60px; margin-bottom: 60px; }
+    .team-header .section-label { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #4ECDC4; margin-bottom: 16px; }
+    .team-header h2 { font-size: 40px; font-weight: 900; letter-spacing: -1px; }
+    .team-scroll {
+      display: flex; gap: 20px; overflow-x: auto; padding: 0 60px 20px;
+      scroll-snap-type: x mandatory; scrollbar-width: none;
     }
-    .team-leader h3 { font-size: 22px; font-weight: 700; }
-    .team-leader .role { color: rgba(232,232,232,0.4); font-size: 15px; }
-    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 800px; margin: 0 auto; }
+    .team-scroll::-webkit-scrollbar { display: none; }
     .team-card {
-      text-align: center; background: #1A1A2E; border-radius: 16px; padding: 28px 16px;
-      border: 1px solid rgba(232,232,232,0.06); transition: transform 0.2s;
+      flex: 0 0 200px; scroll-snap-align: start;
+      background: linear-gradient(135deg, rgba(26,26,46,0.8), rgba(22,22,42,0.8));
+      border: 1px solid rgba(232,232,232,0.04); border-radius: 16px; padding: 32px 20px;
+      text-align: center; transition: transform 0.3s, border-color 0.3s;
     }
-    .team-card:hover { transform: scale(1.03); }
+    .team-card:hover { transform: translateY(-4px); border-color: rgba(255,107,107,0.2); }
+    .team-card.featured { border-color: rgba(255,107,107,0.3); }
     .team-card .avatar {
       width: 72px; height: 72px; border-radius: 50%;
-      background: rgba(232,232,232,0.05); margin: 0 auto 12px;
+      background: rgba(232,232,232,0.05); margin: 0 auto 16px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 28px; color: rgba(232,232,232,0.3);
+      font-size: 28px; color: rgba(232,232,232,0.2);
     }
-    .team-card h3 { font-size: 16px; font-weight: 700; }
-    .team-card .role { color: rgba(232,232,232,0.4); font-size: 13px; }
+    .team-card.featured .avatar { width: 88px; height: 88px; font-size: 36px; }
+    .team-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .team-card .role { font-size: 12px; color: rgba(232,232,232,0.4); }
 
-    /* Fellowship - Large story cards */
-    .fellowship-section { background: #0A0A15; padding: 120px 0; }
-    .fellowship-section .section-title,
-    .fellowship-section .section-subtitle { padding: 0 40px; }
-    .story-wrapper { position: relative; max-width: 100%; margin: 0 auto; padding: 0 60px; }
+    /* Fellowship - Immersive Cards */
+    .fellowship-section { padding: 120px 0; }
+    .fellowship-header { text-align: center; padding: 0 60px; margin-bottom: 60px; }
+    .fellowship-header .section-label { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #FF6B6B; margin-bottom: 16px; }
+    .fellowship-header h2 { font-size: 40px; font-weight: 900; letter-spacing: -1px; }
     .story-track {
       display: flex; gap: 24px; overflow-x: auto;
-      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-      padding: 8px 0 20px; scrollbar-width: none;
+      scroll-snap-type: x mandatory; padding: 0 60px 20px;
+      scrollbar-width: none;
     }
     .story-track::-webkit-scrollbar { display: none; }
     .story-card {
-      min-width: 80vw; max-width: 80vw; scroll-snap-align: center;
-      background: linear-gradient(135deg, #1A1A2E, #16162A); border-radius: 20px; padding: 48px;
-      border: 1px solid rgba(232,232,232,0.06); flex-shrink: 0;
-      display: flex; flex-direction: column; justify-content: center;
+      flex: 0 0 85vw; max-width: 85vw; scroll-snap-align: center;
+      min-height: 400px; border-radius: 24px; padding: 60px;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
     }
-    .story-card h3 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
-    .story-card .time { font-size: 14px; color: #FF6B6B; margin-bottom: 20px; font-weight: 600; }
-    .story-card p { font-size: 16px; color: rgba(232,232,232,0.6); line-height: 1.7; max-width: 600px; }
-    .story-nav {
-      display: flex; justify-content: center; gap: 12px; margin-top: 32px;
+    .story-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, #1A1A2E 0%, #16162A 100%);
+      z-index: 0;
     }
+    .story-card::after {
+      content: ''; position: absolute; bottom: -50%; right: -20%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,107,107,0.1), transparent 70%);
+      border-radius: 50%;
+    }
+    .story-card > * { position: relative; z-index: 1; }
+    .story-card .card-number {
+      position: absolute; top: 32px; right: 40px;
+      font-size: 80px; font-weight: 900; color: rgba(232,232,232,0.03);
+      letter-spacing: -4px;
+    }
+    .story-card h3 { font-size: 32px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px; }
+    .story-card .time { font-size: 13px; color: #FF6B6B; margin-bottom: 16px; font-weight: 600; letter-spacing: 1px; }
+    .story-card p { font-size: 16px; color: rgba(232,232,232,0.5); line-height: 1.7; max-width: 500px; }
+    .story-nav { display: flex; justify-content: center; gap: 8px; margin-top: 32px; }
     .story-dot {
-      width: 8px; height: 8px; border-radius: 50%; background: rgba(232,232,232,0.2);
-      cursor: pointer; transition: background 0.2s, transform 0.2s;
+      width: 32px; height: 3px; border-radius: 2px; background: rgba(232,232,232,0.1);
+      cursor: pointer; transition: all 0.3s;
     }
-    .story-dot.active { background: #FF6B6B; transform: scale(1.3); }
+    .story-dot.active { background: #FF6B6B; width: 48px; }
 
-    /* Newcomer */
-    .newcomer-content { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-    .newcomer-guide h3 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
-    .newcomer-guide ul { list-style: none; }
-    .newcomer-guide li {
-      padding: 12px 0; border-bottom: 1px solid rgba(232,232,232,0.06); font-size: 15px; color: rgba(232,232,232,0.7);
+    /* Newcomer - Stacked */
+    .newcomer-section { padding: 120px 0; background: #0C0C18; }
+    .newcomer-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+    .newcomer-header { text-align: center; margin-bottom: 60px; }
+    .newcomer-header .section-label { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #4ECDC4; margin-bottom: 16px; }
+    .newcomer-header h2 { font-size: 40px; font-weight: 900; letter-spacing: -1px; }
+    .newcomer-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .guide-list { list-style: none; }
+    .guide-list li {
+      padding: 16px 0; border-bottom: 1px solid rgba(232,232,232,0.04);
+      font-size: 15px; color: rgba(232,232,232,0.6); display: flex; align-items: center; gap: 12px;
     }
-    .newcomer-guide li::before { content: '✓ '; color: #4ECDC4; font-weight: 600; }
-    .contact-form { background: #1A1A2E; border-radius: 16px; padding: 32px; border: 1px solid rgba(232,232,232,0.06); }
-    .contact-form h3 { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+    .guide-list li::before {
+      content: ''; width: 6px; height: 6px; background: #4ECDC4; border-radius: 50%; flex-shrink: 0;
+    }
+    .contact-card {
+      background: linear-gradient(135deg, rgba(26,26,46,0.8), rgba(22,22,42,0.8));
+      border: 1px solid rgba(232,232,232,0.04); border-radius: 20px; padding: 40px;
+    }
+    .contact-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 24px; }
     .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 14px; color: rgba(232,232,232,0.5); margin-bottom: 6px; }
+    .form-group label { display: block; font-size: 12px; color: rgba(232,232,232,0.4); margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
     .form-group input, .form-group textarea {
-      width: 100%; padding: 12px 14px; border: 1px solid rgba(232,232,232,0.1); border-radius: 8px;
-      font-size: 15px; font-family: inherit; background: #0F0F1A; color: #E8E8E8;
+      width: 100%; padding: 14px 16px; border: 1px solid rgba(232,232,232,0.08); border-radius: 12px;
+      font-size: 15px; font-family: inherit; background: rgba(8,8,15,0.5); color: #E8E8E8;
+      transition: border-color 0.2s;
     }
     .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #FF6B6B; }
     .form-group textarea { resize: vertical; min-height: 80px; }
     .submit-btn {
-      width: 100%; padding: 14px; background: #FF6B6B; color: #0F0F1A;
-      border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
-      cursor: pointer; transition: box-shadow 0.2s;
+      width: 100%; padding: 16px; background: #FF6B6B; color: #08080F;
+      border: none; border-radius: 50px; font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: box-shadow 0.3s; letter-spacing: 0.5px;
     }
-    .submit-btn:hover { box-shadow: 0 4px 24px rgba(255,107,107,0.4); }
+    .submit-btn:hover { box-shadow: 0 0 30px rgba(255,107,107,0.4); }
 
-    /* Footer */
+    /* Footer - Minimal */
     .footer {
-      background: #0A0A15; color: #E8E8E8; padding: 60px 40px 30px;
+      padding: 80px 60px 40px;
     }
-    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; max-width: 1100px; margin: 0 auto; }
-    .footer h4 { font-size: 14px; margin-bottom: 16px; color: rgba(232,232,232,0.4); text-transform: uppercase; letter-spacing: 2px; }
-    .footer p, .footer a { font-size: 14px; color: rgba(232,232,232,0.5); line-height: 1.8; }
-    .footer a { text-decoration: none; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+    .footer-brand p { font-size: 14px; color: rgba(232,232,232,0.3); margin-top: 12px; max-width: 300px; }
+    .footer h4 { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,232,232,0.3); margin-bottom: 20px; }
+    .footer p, .footer a { font-size: 14px; color: rgba(232,232,232,0.4); line-height: 2; }
+    .footer a { text-decoration: none; transition: color 0.2s; }
     .footer a:hover { color: #FF6B6B; }
-    .map-placeholder {
-      width: 100%; height: 200px; background: rgba(232,232,232,0.03);
-      border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      font-size: 14px; color: rgba(232,232,232,0.2); border: 1px solid rgba(232,232,232,0.06);
-    }
     .footer-bottom {
-      text-align: center; margin-top: 40px; padding-top: 20px;
-      border-top: 1px solid rgba(232,232,232,0.06);
-      font-size: 13px; color: rgba(232,232,232,0.2);
+      text-align: center; padding-top: 32px;
+      border-top: 1px solid rgba(232,232,232,0.04);
+      font-size: 12px; color: rgba(232,232,232,0.15); letter-spacing: 1px;
     }
 
     /* Mobile */
@@ -237,19 +261,24 @@
       .nav-links.open {
         display: flex; flex-direction: column;
         position: absolute; top: 60px; left: 0; right: 0;
-        background: rgba(15,15,26,0.98); padding: 20px 40px; gap: 16px;
+        background: rgba(8,8,15,0.98); padding: 20px 40px; gap: 16px;
       }
-      .hero h1 { font-size: 32px; }
-      .hero .subtitle { font-size: 17px; }
-      .values-grid { grid-template-columns: repeat(2, 1fr); }
-      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 120px 24px 60px; }
+      .hero-right { display: none; }
+      .hero h1 { font-size: 36px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 24px; }
+      .history-inner { padding: 0 24px; }
+      .history-grid { grid-template-columns: 1fr 1fr; }
+      .history-cell .year { font-size: 36px; }
+      .vision-quote { font-size: 24px; }
+      .team-scroll { padding: 0 24px 20px; }
+      .story-track { padding: 0 24px 20px; }
+      .story-card { flex: 0 0 90vw; max-width: 90vw; padding: 40px; min-height: 300px; }
+      .newcomer-inner { padding: 0 24px; }
       .newcomer-content { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .timeline-item .content { width: 80%; }
-      .timeline::before { left: 20px; }
-      .timeline-item .year { left: 20px; }
-      .story-card { min-width: 90vw; max-width: 90vw; padding: 32px; }
-      .story-card h3 { font-size: 22px; }
+      .footer { padding: 60px 24px 30px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
     }
   </style>
 </head>
@@ -274,127 +303,129 @@
     <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
   </nav>
 
-  <!-- Hero -->
+  <!-- Hero - Split -->
   <section class="hero">
-    <svg class="logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M127.281 45H171.8v134.526h-44.519V45zM340.2 331.474h44.52V466H340.2V331.474zM127.281 197.915H171.8V466h-44.519V197.915z"></path>
-      <path d="M215.352 89.52v45.487H83.729V89.519h131.623zM340.2 45H384.72v269.053H340.2V45zM428.271 421.48V466H340.2v-44.52h88.071z"></path>
-      <path fill-rule="evenodd" d="M340.2 399.221v3.871l1.936-1.643-1.936-2.228z" clip-rule="evenodd"></path>
-      <path d="M171.8 197.399v66.447l59.91 67.628h46.167L340.2 94.514V45h-32.058l-62.087 234.992-74.255-82.593z"></path>
-    </svg>
-    <h1>米兰华人基督教会</h1>
-    <p class="subtitle">在米兰，一起认识爱</p>
-    <div class="cta-group">
-      <a href="#fellowship" class="cta-btn cta-primary">主日聚会时间</a>
-      <a href="#newcomer" class="cta-btn cta-secondary">我是第一次来</a>
+    <div class="hero-left">
+      <div class="hero-tag">Milan Chinese Christian Church</div>
+      <h1>米兰华人<span>基督教会</span></h1>
+      <p class="subtitle">在米兰，一起认识爱。无论你是否已经认识基督，我们都诚挚地邀请你。</p>
+      <div class="cta-group">
+        <a href="#fellowship" class="cta-btn cta-primary">主日聚会时间</a>
+        <a href="#newcomer" class="cta-btn cta-secondary">我是第一次来</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <svg class="logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M127.281 45H171.8v134.526h-44.519V45zM340.2 331.474h44.52V466H340.2V331.474zM127.281 197.915H171.8V466h-44.519V197.915z"></path>
+        <path d="M215.352 89.52v45.487H83.729V89.519h131.623zM340.2 45H384.72v269.053H340.2V45zM428.271 421.48V466H340.2v-44.52h88.071z"></path>
+        <path fill-rule="evenodd" d="M340.2 399.221v3.871l1.936-1.643-1.936-2.228z" clip-rule="evenodd"></path>
+        <path d="M171.8 197.399v66.447l59.91 67.628h46.167L340.2 94.514V45h-32.058l-62.087 234.992-74.255-82.593z"></path>
+      </svg>
     </div>
   </section>
 
-  <!-- About -->
-  <section class="section" id="about">
-    <h2 class="section-title">关于我们</h2>
-    <p class="section-subtitle">一个在米兰扎根、以爱相连的华人基督徒群体</p>
-    <p class="about-text">
-      米兰华人基督教会成立于2005年，是一间以圣经为基础、以基督为中心的华人教会。
-      我们致力于在异国他乡为华人信徒提供一个属灵的家，同时欢迎每一位寻求真理的朋友。
-      无论你是否已经认识基督，我们都诚挚地邀请你来认识这份爱。
-    </p>
-    <div class="values-grid">
-      <div class="value-card">
-        <div class="icon">🙏</div>
-        <h3>敬拜</h3>
-        <p>以心灵和诚实敬拜神</p>
+  <div class="divider"></div>
+
+  <!-- About - Split with Stats -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-left">
+        <div class="section-label">About Us</div>
+        <h2>一个在米兰扎根、以爱相连的华人基督徒群体</h2>
+        <p>米兰华人基督教会成立于2005年，是一间以圣经为基础、以基督为中心的华人教会。我们致力于在异国他乡为华人信徒提供一个属灵的家，同时欢迎每一位寻求真理的朋友。</p>
       </div>
-      <div class="value-card">
-        <div class="icon">❤️</div>
-        <h3>团契</h3>
-        <p>彼此相爱、互相扶持</p>
-      </div>
-      <div class="value-card">
-        <div class="icon">🌍</div>
-        <h3>宣教</h3>
-        <p>将福音传到地极</p>
-      </div>
-      <div class="value-card">
-        <div class="icon">🤝</div>
-        <h3>服事</h3>
-        <p>以恩赐服事众人</p>
+      <div class="about-right">
+        <div class="stat-card">
+          <div class="icon">🙏</div>
+          <h3>敬拜</h3>
+          <p>以心灵和诚实敬拜神</p>
+        </div>
+        <div class="stat-card">
+          <div class="icon">❤️</div>
+          <h3>团契</h3>
+          <p>彼此相爱、互相扶持</p>
+        </div>
+        <div class="stat-card">
+          <div class="icon">🌍</div>
+          <h3>宣教</h3>
+          <p>将福音传到地极</p>
+        </div>
+        <div class="stat-card">
+          <div class="icon">🤝</div>
+          <h3>服事</h3>
+          <p>以恩赐服事众人</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- History -->
-  <section class="section" id="history">
-    <h2 class="section-title">教会历史</h2>
-    <p class="section-subtitle">从几个人的小聚会到今天的大家庭</p>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="content">
+  <div class="divider"></div>
+
+  <!-- History - Grid -->
+  <section class="history-section" id="history">
+    <div class="history-inner">
+      <div class="history-header">
+        <div class="section-label">Our Journey</div>
+        <h2>从几个人的小聚会到今天的大家庭</h2>
+      </div>
+      <div class="history-grid">
+        <div class="history-cell">
+          <div class="year">2005</div>
           <h3>创立初期</h3>
           <p>几位在米兰留学的弟兄姊妹开始家庭聚会，一起查经祷告</p>
         </div>
-        <span class="year">2005</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
+        <div class="history-cell">
+          <div class="year">2007</div>
           <h3>正式成立</h3>
           <p>聚会人数增长，正式成立米兰华人基督教会</p>
         </div>
-        <span class="year">2007</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
+        <div class="history-cell">
+          <div class="year">2010</div>
           <h3>第一位全职传道人</h3>
           <p>教会迎接第一位全职传道人，开始系统性牧养</p>
         </div>
-        <span class="year">2010</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
+        <div class="history-cell">
+          <div class="year">2013</div>
           <h3>青年团契成立</h3>
           <p>年轻一代的事工蓬勃发展，青年团契正式成立</p>
         </div>
-        <span class="year">2013</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
+        <div class="history-cell">
+          <div class="year">2018</div>
           <h3>新堂落成</h3>
           <p>搬入新的聚会场地，可容纳更多弟兄姊妹</p>
         </div>
-        <span class="year">2018</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
+        <div class="history-cell">
+          <div class="year">2022</div>
           <h3>差派宣教</h3>
           <p>开始支持海外宣教事工，扩展神国度的视野</p>
         </div>
-        <span class="year">2022</span>
       </div>
     </div>
   </section>
 
   <!-- Vision -->
   <section class="vision-section" id="vision">
-    <h2 class="section-title">教会异象</h2>
-    <p class="section-subtitle">我们所追求的方向</p>
+    <div class="section-label">Vision</div>
     <blockquote class="vision-quote">
-      "成为一座<span>灯台</span>，在米兰这座城市中<span>发光</span>。
-      让每一位走进这里的华人，都能找到<span>家的温暖</span>，
-      认识那位创造天地的主，经历<span>生命的改变</span>。"
+      "成为一座<em>灯台</em>，在米兰这座城市中<em>发光</em>。让每一位走进这里的华人，都能找到<em>家的温暖</em>，认识那位创造天地的主，经历<em>生命的改变</em>。"
     </blockquote>
     <p class="vision-verse">— 以赛亚书 60:1 "兴起，发光！因为你的光已经来到"</p>
   </section>
 
-  <!-- Team -->
-  <section class="section" id="team">
-    <h2 class="section-title">教会同工</h2>
-    <p class="section-subtitle">同心服事，彼此配搭</p>
-    <div class="team-leader">
-      <div class="avatar">👤</div>
-      <h3>张牧师</h3>
-      <p class="role">主任牧师</p>
+  <div class="divider"></div>
+
+  <!-- Team - Horizontal Scroll -->
+  <section class="team-section" id="team">
+    <div class="team-header">
+      <div class="section-label">Our Team</div>
+      <h2>同心服事，彼此配搭</h2>
     </div>
-    <div class="team-grid">
+    <div class="team-scroll">
+      <div class="team-card featured">
+        <div class="avatar">👤</div>
+        <h3>张牧师</h3>
+        <p class="role">主任牧师</p>
+      </div>
       <div class="team-card">
         <div class="avatar">👤</div>
         <h3>李弟兄</h3>
@@ -428,85 +459,100 @@
     </div>
   </section>
 
-  <!-- Fellowship Story Cards -->
+  <!-- Fellowship -->
   <section class="fellowship-section" id="fellowship">
-    <h2 class="section-title">团契与小组</h2>
-    <p class="section-subtitle">找到属于你的小组，一起成长</p>
-    <div class="story-wrapper">
-      <div class="story-track" id="storyTrack">
-        <div class="story-card">
-          <h3>主日崇拜</h3>
-          <div class="time">每周日 10:00 - 12:00</div>
-          <p>全体弟兄姊妹一起敬拜神、聆听神的话语。设有儿童主日学。</p>
-        </div>
-        <div class="story-card">
-          <h3>青年团契</h3>
-          <div class="time">每周六 19:00 - 21:00</div>
-          <p>18-35岁的年轻人，一起查经、分享生活、彼此鼓励。</p>
-        </div>
-        <div class="story-card">
-          <h3>夫妻小组</h3>
-          <div class="time">每月第一、三周五 19:30</div>
-          <p>已婚夫妇一起学习经营合神心意的家庭。</p>
-        </div>
-        <div class="story-card">
-          <h3>祷告会</h3>
-          <div class="time">每周三 20:00 - 21:30</div>
-          <p>一起为教会、为弟兄姊妹、为世界代祷。</p>
-        </div>
-        <div class="story-card">
-          <h3>查经班</h3>
-          <div class="time">每周四 19:30 - 21:00</div>
-          <p>深入研读圣经，扎根神的话语。</p>
-        </div>
-        <div class="story-card">
-          <h3>儿童主日学</h3>
-          <div class="time">每周日 10:00 - 11:30</div>
-          <p>3-12岁儿童，在游戏中认识神。</p>
-        </div>
-        <div class="story-card">
-          <h3>姐妹小组</h3>
-          <div class="time">每月第二、四周六 15:00</div>
-          <p>姐妹们一起分享、祷告、互相支持。</p>
-        </div>
-        <div class="story-card">
-          <h3>弟兄小组</h3>
-          <div class="time">每月第二、四周六 15:00</div>
-          <p>弟兄们一起学习做属灵的领袖。</p>
-        </div>
-        <div class="story-card">
-          <h3>新人接待</h3>
-          <div class="time">每月第一个主日</div>
-          <p>欢迎第一次来教会的朋友，介绍教会、解答疑问。</p>
-        </div>
-        <div class="story-card">
-          <h3>诗班</h3>
-          <div class="time">每周日 09:00 - 09:45</div>
-          <p>用歌声赞美神，参与主日崇拜献诗。</p>
-        </div>
-        <div class="story-card">
-          <h3>关怀探访</h3>
-          <div class="time">不定期</div>
-          <p>探访有需要的弟兄姊妹，送去教会的温暖。</p>
-        </div>
-        <div class="story-card">
-          <h3>意大利语查经</h3>
-          <div class="time">每周二 19:00 - 20:30</div>
-          <p>用意大利语查经，帮助弟兄姊妹融入本地社区。</p>
-        </div>
+    <div class="fellowship-header">
+      <div class="section-label">Fellowship</div>
+      <h2>找到属于你的小组，一起成长</h2>
+    </div>
+    <div class="story-track" id="storyTrack">
+      <div class="story-card">
+        <div class="card-number">01</div>
+        <h3>主日崇拜</h3>
+        <div class="time">每周日 10:00 - 12:00</div>
+        <p>全体弟兄姊妹一起敬拜神、聆听神的话语。设有儿童主日学。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">02</div>
+        <h3>青年团契</h3>
+        <div class="time">每周六 19:00 - 21:00</div>
+        <p>18-35岁的年轻人，一起查经、分享生活、彼此鼓励。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">03</div>
+        <h3>夫妻小组</h3>
+        <div class="time">每月第一、三周五 19:30</div>
+        <p>已婚夫妇一起学习经营合神心意的家庭。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">04</div>
+        <h3>祷告会</h3>
+        <div class="time">每周三 20:00 - 21:30</div>
+        <p>一起为教会、为弟兄姊妹、为世界代祷。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">05</div>
+        <h3>查经班</h3>
+        <div class="time">每周四 19:30 - 21:00</div>
+        <p>深入研读圣经，扎根神的话语。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">06</div>
+        <h3>儿童主日学</h3>
+        <div class="time">每周日 10:00 - 11:30</div>
+        <p>3-12岁儿童，在游戏中认识神。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">07</div>
+        <h3>姐妹小组</h3>
+        <div class="time">每月第二、四周六 15:00</div>
+        <p>姐妹们一起分享、祷告、互相支持。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">08</div>
+        <h3>弟兄小组</h3>
+        <div class="time">每月第二、四周六 15:00</div>
+        <p>弟兄们一起学习做属灵的领袖。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">09</div>
+        <h3>新人接待</h3>
+        <div class="time">每月第一个主日</div>
+        <p>欢迎第一次来教会的朋友，介绍教会、解答疑问。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">10</div>
+        <h3>诗班</h3>
+        <div class="time">每周日 09:00 - 09:45</div>
+        <p>用歌声赞美神，参与主日崇拜献诗。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">11</div>
+        <h3>关怀探访</h3>
+        <div class="time">不定期</div>
+        <p>探访有需要的弟兄姊妹，送去教会的温暖。</p>
+      </div>
+      <div class="story-card">
+        <div class="card-number">12</div>
+        <h3>意大利语查经</h3>
+        <div class="time">每周二 19:00 - 20:30</div>
+        <p>用意大利语查经，帮助弟兄姊妹融入本地社区。</p>
       </div>
     </div>
     <div class="story-nav" id="storyNav"></div>
   </section>
 
+  <div class="divider"></div>
+
   <!-- Newcomer -->
-  <section class="section" id="newcomer">
-    <h2 class="section-title">新人指南</h2>
-    <p class="section-subtitle">第一次来？我们很期待见到你</p>
-    <div class="newcomer-content">
-      <div class="newcomer-guide">
-        <h3>你需要知道的</h3>
-        <ul>
+  <section class="newcomer-section" id="newcomer">
+    <div class="newcomer-inner">
+      <div class="newcomer-header">
+        <div class="section-label">First Time?</div>
+        <h2>第一次来？我们很期待见到你</h2>
+      </div>
+      <div class="newcomer-content">
+        <ul class="guide-list">
           <li>主日崇拜时间：每周日 10:00 - 12:00</li>
           <li>穿着随意，不需要特别正式</li>
           <li>有免费停车位</li>
@@ -514,53 +560,52 @@
           <li>不认识圣经也没关系，会有人引导你</li>
           <li>聚会后有茶点时间，欢迎留下来交流</li>
         </ul>
-      </div>
-      <div class="contact-form">
-        <h3>提前告诉我们你要来</h3>
-        <form onsubmit="alert('感谢你的留言！我们会尽快联系你。'); return false;">
-          <div class="form-group">
-            <label>你的名字</label>
-            <input type="text" placeholder="怎么称呼你？" required>
-          </div>
-          <div class="form-group">
-            <label>联系方式（微信或电话）</label>
-            <input type="text" placeholder="方便我们联系你" required>
-          </div>
-          <div class="form-group">
-            <label>有什么想问的？（选填）</label>
-            <textarea placeholder="比如：可以带孩子来吗？需要准备什么？"></textarea>
-          </div>
-          <button type="submit" class="submit-btn">提交</button>
-        </form>
+        <div class="contact-card">
+          <h3>提前告诉我们你要来</h3>
+          <form onsubmit="alert('感谢你的留言！我们会尽快联系你。'); return false;">
+            <div class="form-group">
+              <label>你的名字</label>
+              <input type="text" placeholder="怎么称呼你？" required>
+            </div>
+            <div class="form-group">
+              <label>联系方式</label>
+              <input type="text" placeholder="微信或电话" required>
+            </div>
+            <div class="form-group">
+              <label>有什么想问的？</label>
+              <textarea placeholder="比如：可以带孩子来吗？"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">提交</button>
+          </form>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="footer-grid">
-      <div>
-        <h4>聚会地点</h4>
-        <p>Via Example 123, 20100 Milano MI</p>
-        <p>交通：地铁 M2 线 XX 站，步行 5 分钟</p>
-        <div class="map-placeholder">Google Maps 嵌入区域</div>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <svg width="120" height="28" fill="currentColor" viewBox="0 0 418 99"><path d="M156.389 10.647h.397c.059 0 .088.03.088.088v28h23.319c1.59 0 3.224-.382 4.903-1.148h.22c.148.06.221.162.221.31v.265c0 1.207-.736 2.311-2.208 3.312-1.001.589-2.341.883-4.019.883h-22.436v.044c.03 12.131.045 25.174.045 39.13 0 3.77-.413 6.007-1.237 6.713-.589.766-1.487 1.149-2.694 1.149h-1.104V42.357h-28.619v-.088c0-.736.486-1.605 1.457-2.606.678-.618 1.414-.927 2.209-.927h24.953c-.03-3.769-.044-6.64-.044-8.612V18.862c0-3.592.22-5.698.662-6.316.294-.707.751-1.222 1.369-1.546.353-.235 1.193-.353 2.518-.353z"></path></svg>
+          <p>在米兰，一起认识爱。一个扎根米兰、以爱相连的华人基督徒群体。</p>
+        </div>
+        <div>
+          <h4>聚会时间</h4>
+          <p>主日崇拜：每周日 10:00</p>
+          <p>祷告会：每周三 20:00</p>
+          <p>青年团契：每周六 19:00</p>
+        </div>
+        <div>
+          <h4>联系我们</h4>
+          <p><a href="#">Instagram</a></p>
+          <p><a href="#">微信公众号</a></p>
+          <p>info@milanchurch.org</p>
+        </div>
       </div>
-      <div>
-        <h4>聚会时间</h4>
-        <p>主日崇拜：每周日 10:00 - 12:00</p>
-        <p>祷告会：每周三 20:00 - 21:30</p>
-        <p>青年团契：每周六 19:00 - 21:00</p>
+      <div class="footer-bottom">
+        &copy; 2026 米兰华人基督教会
       </div>
-      <div>
-        <h4>联系我们</h4>
-        <p>邮箱：info@milanchurch.org</p>
-        <p>电话：+39 02 1234567</p>
-        <p><a href="#">Instagram</a></p>
-        <p><a href="#">微信公众号</a></p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      &copy; 2026 米兰华人基督教会 Milan Chinese Christian Church
     </div>
   </footer>
 

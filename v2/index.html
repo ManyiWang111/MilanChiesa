@@ -87,7 +87,8 @@
     .value-card p { font-size: 14px; color: #8B7355; }
 
     /* Timeline - Horizontal */
-    .timeline-h { position: relative; padding: 40px 0; overflow-x: auto; }
+    .timeline-h { position: relative; padding: 40px 0; overflow-x: auto; scrollbar-width: none; }
+    .timeline-h::-webkit-scrollbar { display: none; }
     .timeline-h-track {
       display: flex; gap: 0; min-width: max-content; position: relative; padding: 0 40px;
     }
