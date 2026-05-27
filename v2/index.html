@@ -89,6 +89,15 @@
     /* Timeline - Horizontal */
     .timeline-h { position: relative; padding: 40px 0; overflow-x: auto; scrollbar-width: none; }
     .timeline-h::-webkit-scrollbar { display: none; }
+    .timeline-fade { position: relative; }
+    .timeline-fade::before, .timeline-fade::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2;
+      pointer-events: none; transition: opacity 0.3s;
+    }
+    .timeline-fade::before { left: 0; background: linear-gradient(to right, #FDF6EC, transparent); }
+    .timeline-fade::after { right: 0; background: linear-gradient(to left, #FDF6EC, transparent); }
+    .timeline-fade.at-start::before { opacity: 0; }
+    .timeline-fade.at-end::after { opacity: 0; }
     .timeline-h-track {
       display: flex; gap: 0; min-width: max-content; position: relative; padding: 0 40px;
     }
@@ -325,7 +334,8 @@
   <section class="section" id="history">
     <h2 class="section-title">教会历史</h2>
     <p class="section-subtitle">从几个人的小聚会到今天的大家庭</p>
-    <div class="timeline-h">
+    <div class="timeline-fade at-start" id="timelineFade">
+    <div class="timeline-h" id="timelineH">
       <div class="timeline-h-track">
         <div class="timeline-h-item">
           <span class="year">2005</span>
@@ -358,6 +368,7 @@
           <p>开始支持海外宣教事工</p>
         </div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -548,6 +559,17 @@
       &copy; 2026 米兰华人基督教会 Milan Chinese Christian Church
     </div>
   </footer>
+
+  <script>
+    const timeline = document.getElementById('timelineH');
+    const fade = document.getElementById('timelineFade');
+    function updateFade() {
+      fade.classList.toggle('at-start', timeline.scrollLeft <= 10);
+      fade.classList.toggle('at-end', timeline.scrollLeft + timeline.clientWidth >= timeline.scrollWidth - 10);
+    }
+    timeline.addEventListener('scroll', updateFade);
+    updateFade();
+  </script>
 
 </body>
 </html>
