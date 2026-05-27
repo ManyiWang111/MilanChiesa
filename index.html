@@ -3,544 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>米兰华人基督教会</title>
+  <title>米兰华人基督教会 — 选择风格</title>
   <link rel="icon" type="image/png" href="https://www.milanchiesa.com/assets/icons/icon-512x512.png">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; color: #333; line-height: 1.6; }
-
-    /* Navigation */
-    .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(44, 62, 80, 0.95); backdrop-filter: blur(10px);
-      padding: 0 40px; height: 60px;
-      display: flex; align-items: center; justify-content: space-between;
+    body {
+      font-family: "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      background: #f5f5f5; color: #333;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 40px 20px;
     }
-    .navbar .logo-text { color: #fff; height: 32px; width: auto; display: block; }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; transition: color 0.2s; }
-    .nav-links a:hover { color: #fff; }
-    .hamburger { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; color: #fff; padding: 0 20px;
+    .logo-mark { width: 64px; height: 64px; margin-bottom: 20px; color: #2c3e50; }
+    h1 { font-size: 28px; color: #2c3e50; margin-bottom: 8px; }
+    .subtitle { color: #888; font-size: 16px; margin-bottom: 48px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; width: 100%; }
+    .card {
+      background: #fff; border-radius: 16px; padding: 32px 24px; text-align: center;
+      text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 2px solid transparent;
     }
-    .hero .logo-mark {
-      width: 100px; height: 100px; margin-bottom: 24px; color: #fff;
-    }
-    .hero h1 { font-size: 42px; font-weight: 700; margin-bottom: 12px; }
-    .hero .subtitle { font-size: 20px; opacity: 0.9; margin-bottom: 40px; }
-    .hero .cta-group { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-    .hero .cta-btn {
-      padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;
-      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-    .cta-primary { background: #fff; color: #2c3e50; }
-    .cta-secondary { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.6); }
-
-    /* Sections */
-    .section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
-    .section-title { font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 12px; color: #2c3e50; }
-    .section-subtitle { text-align: center; color: #888; margin-bottom: 48px; font-size: 16px; }
-
-    /* About */
-    .about-content { max-width: 700px; margin: 0 auto 48px; text-align: center; font-size: 17px; color: #555; }
-    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-    .value-card {
-      background: #f8f9fa; border-radius: 12px; padding: 28px 20px; text-align: center;
-      transition: transform 0.2s;
-    }
-    .value-card:hover { transform: translateY(-4px); }
-    .value-card .icon { font-size: 36px; margin-bottom: 12px; }
-    .value-card h3 { font-size: 18px; color: #2c3e50; margin-bottom: 8px; }
-    .value-card p { font-size: 14px; color: #888; }
-
-    /* Timeline */
-    .timeline { position: relative; max-width: 600px; margin: 0 auto; }
-    .timeline::before {
-      content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
-      background: #ddd; transform: translateX(-50%);
-    }
-    .timeline-item {
-      position: relative; padding: 20px 0;
-      display: flex; align-items: flex-start;
-    }
-    .timeline-item:nth-child(odd) { flex-direction: row; }
-    .timeline-item:nth-child(even) { flex-direction: row-reverse; }
-    .timeline-item .content {
-      width: 45%; padding: 20px; background: #f8f9fa; border-radius: 12px;
-    }
-    .timeline-item:nth-child(odd) .content { margin-right: auto; text-align: right; }
-    .timeline-item:nth-child(even) .content { margin-left: auto; text-align: left; }
-    .timeline-item .year {
-      position: absolute; left: 50%; transform: translateX(-50%);
-      background: #2c3e50; color: #fff; padding: 4px 12px; border-radius: 20px;
-      font-size: 13px; font-weight: 600;
-    }
-    .timeline-item h3 { font-size: 16px; color: #2c3e50; margin-bottom: 4px; }
-    .timeline-item p { font-size: 14px; color: #666; }
-
-    /* Vision */
-    .vision-section {
-      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-      color: #fff; text-align: center; padding: 100px 40px;
-    }
-    .vision-section .section-title { color: #fff; }
-    .vision-section .section-subtitle { color: rgba(255,255,255,0.6); }
-    .vision-quote {
-      max-width: 700px; margin: 0 auto;
-      font-size: 22px; line-height: 1.8; font-style: italic;
-      border-left: 4px solid rgba(255,255,255,0.4); padding-left: 24px;
-      text-align: left;
-    }
-    .vision-verse {
-      margin-top: 24px; font-size: 15px; opacity: 0.7;
-    }
-
-    /* Team */
-    .team-leader {
-      text-align: center; margin-bottom: 48px;
-    }
-    .team-leader .avatar {
-      width: 120px; height: 120px; border-radius: 50%;
-      background: #e0e0e0; margin: 0 auto 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 48px; color: #999;
-    }
-    .team-leader h3 { font-size: 22px; color: #2c3e50; }
-    .team-leader .role { color: #888; font-size: 15px; }
-    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 800px; margin: 0 auto; }
-    .team-card { text-align: center; background: #f8f9fa; border-radius: 12px; padding: 28px 16px; }
-    .team-card .avatar {
-      width: 72px; height: 72px; border-radius: 50%;
-      background: #e0e0e0; margin: 0 auto 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; color: #999;
-    }
-    .team-card h3 { font-size: 16px; color: #2c3e50; }
-    .team-card .role { color: #888; font-size: 13px; }
-
-    /* Fellowship Carousel */
-    .fellowship-section { background: #f8f9fa; padding: 100px 0; }
-    .fellowship-section .section-title,
-    .fellowship-section .section-subtitle { padding: 0 40px; }
-    .carousel-wrapper { position: relative; max-width: 1100px; margin: 0 auto; padding: 0 60px; }
-    .carousel-track {
-      display: flex; gap: 24px; overflow-x: auto;
-      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-      padding: 8px 0 20px; scrollbar-width: thin;
-    }
-    .carousel-track::-webkit-scrollbar { height: 6px; }
-    .carousel-track::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
-    .fellowship-card {
-      min-width: 280px; max-width: 280px; scroll-snap-align: start;
-      background: #fff; border-radius: 12px; padding: 24px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06); flex-shrink: 0;
-    }
-    .fellowship-card h3 { font-size: 18px; color: #2c3e50; margin-bottom: 8px; }
-    .fellowship-card .time { font-size: 13px; color: #3498db; margin-bottom: 12px; font-weight: 600; }
-    .fellowship-card p { font-size: 14px; color: #666; line-height: 1.6; }
-    .carousel-btn {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 44px; height: 44px; border-radius: 50%; border: none;
-      background: #2c3e50; color: #fff; font-size: 20px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s; z-index: 2;
-    }
-    .carousel-btn:hover { background: #34495e; }
-    .carousel-prev { left: 8px; }
-    .carousel-next { right: 8px; }
-
-    /* Newcomer */
-    .newcomer-content { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-    .newcomer-guide h3 { font-size: 20px; color: #2c3e50; margin-bottom: 16px; }
-    .newcomer-guide ul { list-style: none; }
-    .newcomer-guide li {
-      padding: 12px 0; border-bottom: 1px solid #eee; font-size: 15px; color: #555;
-    }
-    .newcomer-guide li::before { content: '✓ '; color: #27ae60; font-weight: 600; }
-    .contact-form { background: #f8f9fa; border-radius: 12px; padding: 32px; }
-    .contact-form h3 { font-size: 20px; color: #2c3e50; margin-bottom: 20px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 14px; color: #555; margin-bottom: 6px; }
-    .form-group input, .form-group textarea {
-      width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px;
-      font-size: 15px; font-family: inherit;
-    }
-    .form-group textarea { resize: vertical; min-height: 80px; }
-    .submit-btn {
-      width: 100%; padding: 12px; background: #2c3e50; color: #fff;
-      border: none; border-radius: 8px; font-size: 16px; font-weight: 600;
-      cursor: pointer; transition: background 0.2s;
-    }
-    .submit-btn:hover { background: #34495e; }
-
-    /* Footer */
-    .footer {
-      background: #2c3e50; color: #fff; padding: 60px 40px 30px;
-    }
-    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; max-width: 1100px; margin: 0 auto; }
-    .footer h4 { font-size: 16px; margin-bottom: 16px; opacity: 0.9; }
-    .footer p, .footer a { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.8; }
-    .footer a { text-decoration: none; }
-    .footer a:hover { color: #fff; }
-    .map-placeholder {
-      width: 100%; height: 200px; background: rgba(255,255,255,0.1);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
-      font-size: 14px; color: rgba(255,255,255,0.5);
-    }
-    .footer-bottom {
-      text-align: center; margin-top: 40px; padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 13px; color: rgba(255,255,255,0.4);
-    }
-
-    /* Mobile */
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+    .color-bar { height: 6px; border-radius: 3px; margin-bottom: 20px; }
+    .card h2 { font-size: 20px; margin-bottom: 8px; }
+    .card p { font-size: 14px; color: #888; line-height: 1.6; }
+    .card-v1 .color-bar { background: linear-gradient(90deg, #2c3e50, #3498db); }
+    .card-v2 .color-bar { background: linear-gradient(90deg, #8B3A3A, #C9A84C); }
+    .card-v3 .color-bar { background: linear-gradient(90deg, #FF6B6B, #4ECDC4); }
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: block; }
-      .nav-links.open {
-        display: flex; flex-direction: column;
-        position: absolute; top: 60px; left: 0; right: 0;
-        background: rgba(44, 62, 80, 0.98); padding: 20px 40px; gap: 16px;
-      }
-      .hero h1 { font-size: 28px; }
-      .hero .subtitle { font-size: 16px; }
-      .values-grid { grid-template-columns: repeat(2, 1fr); }
-      .team-grid { grid-template-columns: repeat(2, 1fr); }
-      .newcomer-content { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .timeline-item .content { width: 80%; }
-      .timeline::before { left: 20px; }
-      .timeline-item .year { left: 20px; }
+      .cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Navigation -->
-  <nav class="navbar">
-    <svg class="logo-text" xmlns="http://www.w3.org/2000/svg" width="160" height="38" fill="currentColor" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 418 99">
-      <path d="M156.389 10.647h.397c.059 0 .088.03.088.088v28h23.319c1.59 0 3.224-.382 4.903-1.148h.22c.148.06.221.162.221.31v.265c0 1.207-.736 2.311-2.208 3.312-1.001.589-2.341.883-4.019.883h-22.436v.044c.03 12.131.045 25.174.045 39.13 0 3.77-.413 6.007-1.237 6.713-.589.766-1.487 1.149-2.694 1.149h-1.104V42.357h-28.619v-.088c0-.736.486-1.605 1.457-2.606.678-.618 1.414-.927 2.209-.927h24.953c-.03-3.769-.044-6.64-.044-8.612V18.862c0-3.592.22-5.698.662-6.316.294-.707.751-1.222 1.369-1.546.353-.235 1.193-.353 2.518-.353zm-26.19 4.637h2.208c1.266 0 2.194.825 2.782 2.474.501 2.679 1.06 4.799 1.679 6.36a21.288 21.288 0 002.164 4.018c.559.854 1.825 2.253 3.798 4.196.942.795 1.413 1.28 1.413 1.457-.059.383-.235.575-.53.575h-.132c-1.266-.324-2.591-.854-3.975-1.59-3.415-1.797-5.948-4.726-7.596-8.79-.442-1.118-.898-2.796-1.37-5.034a45.605 45.605 0 01-.441-3.666zm45.534 0h2.12v.044c0 1.237-.368 3.416-1.105 6.537-.618 1.973-1.31 3.621-2.075 4.946-.56.972-1.414 2.076-2.562 3.313-1.59 1.384-2.738 2.223-3.445 2.517-.912.56-2.267 1.134-4.063 1.723h-.265c-.324-.06-.486-.221-.486-.486v-.133c0-.176.31-.5.928-.971 1.855-1.767 2.915-2.886 3.18-3.357 2.12-2.532 3.518-5.314 4.195-8.347.206-.795.442-1.9.707-3.312.559-1.65 1.516-2.474 2.871-2.474zm-39.704 35.818h1.015c.413 0 1.031.015 1.855.044 0 14.78-3.518 25.262-10.555 31.445-2.208 1.796-3.887 2.886-5.035 3.269h-.044c-.147 0-.236-.103-.265-.31v-.088c0-.177.383-.765 1.148-1.767 1.737-2.443 3.136-4.578 4.196-6.403 1.089-2.032 1.943-3.843 2.561-5.433.766-1.737 1.473-4.033 2.12-6.89.589-3.09.884-5.329.884-6.712.088-.736.147-2.326.176-4.77.118-.825.295-1.428.53-1.81.324-.384.795-.575 1.414-.575zm35.817 0h1.016c.854 0 1.413.368 1.678 1.104.206.53.309 1.722.309 3.577 0 4.623.81 9.378 2.429 14.266 1.119 2.973 2.356 5.608 3.71 7.905a89.02 89.02 0 004.77 7.155c.088.118.133.25.133.397v.044c0 .207-.103.31-.31.31-.265 0-1.383-.633-3.356-1.9a25.716 25.716 0 01-5.653-5.785 37.812 37.812 0 01-3.048-5.653c-2.326-5.889-3.489-12.66-3.489-20.316v-.84l-.044-.22c.854-.03 1.472-.044 1.855-.044zM211.699 10.338h2.782c.972 0 1.634.545 1.987 1.634.795 2.885 1.679 5.373 2.65 7.464.795 1.59 1.811 3.194 3.048 4.814.559.736 1.575 1.84 3.047 3.312.383.265.574.471.574.618 0 .236-.088.354-.265.354h-.088c-1.354-.265-2.959-.942-4.814-2.032-.795-.47-1.973-1.457-3.533-2.959-.03-.088-.383-.515-1.06-1.28-1.031-1.443-1.781-2.68-2.253-3.71-1.383-2.945-2.075-5.683-2.075-8.215zm36.612.707h2.915v.132c0 2.797-.868 5.845-2.606 9.142-.677 1.296-1.751 2.738-3.224 4.328-1.737 1.679-3.253 2.797-4.549 3.357-1.501.736-2.649 1.148-3.444 1.236-.148 0-.236-.117-.265-.353 0-.118.456-.574 1.369-1.369 2.237-2.414 3.665-4.255 4.284-5.52 1.03-1.65 2.061-4.05 3.091-7.2.442-1.972.898-3.106 1.369-3.4.383-.236.736-.354 1.06-.354zm10.732 19.962h.133c.147.059.221.206.221.442 0 1.266-.751 2.414-2.253 3.445-1.06.559-2.105.839-3.136.839h-50.48c0-.678.486-1.56 1.458-2.65.736-.619 1.442-.928 2.12-.928h46.549c1.885 0 3.592-.368 5.123-1.104l.265-.044zm-5.344 25.925c.177.059.265.162.265.309v.132c0 1.502-.898 2.739-2.694 3.71-.883.412-1.972.619-3.268.619H208.96v-.045c0-.736.516-1.648 1.546-2.738.677-.56 1.443-.839 2.297-.839h35.906c1.501 0 3.106-.383 4.814-1.148h.176zm8.833 25.968h.177c.088 0 .162.133.221.398 0 1.09-.574 2.135-1.723 3.136a6.526 6.526 0 01-3.798 1.192h-57.502c.088-.765.515-1.59 1.28-2.473.766-.736 1.517-1.104 2.253-1.104h53.439c2.12 0 3.916-.368 5.388-1.104l.265-.044zM320.492 10.603h1.944l.044.044c-.295 3.563-.633 6.419-1.016 8.568a106 106 0 01-.839 3.93h12.896c2.002 0 3.769-.353 5.3-1.06.147-.029.265-.044.353-.044h.044c.147.06.221.162.221.31v.132c0 1.472-.883 2.694-2.65 3.666-.5.206-1.03.368-1.59.486-.294 3.857-.662 7.42-1.104 10.687-1.03 6.596-2.223 12.19-3.577 16.783-1.296 4.27-2.68 8.126-4.152 11.571v.089c1.443 3.562 3.401 7.36 5.874 11.394 1.796 2.885 4.034 6.05 6.713 9.495.942 1.149 1.413 1.811 1.413 1.988v.088c-.117.354-.323.53-.618.53-.913-.5-2.252-1.472-4.019-2.915-1.678-1.413-3.415-3.18-5.211-5.3-.059-.088-.398-.515-1.016-1.28a61.734 61.734 0 01-4.858-7.42l-.751-1.546h-.044c-1.296 2.503-3.018 5.227-5.167 8.17-.972 1.296-2.444 2.96-4.417 4.992-1.295 1.207-2.473 2.208-3.533 3.003-1.826 1.236-3.239 2.046-4.24 2.429h-.044c-.383-.06-.574-.221-.574-.486v-.133c0-.176.309-.574.927-1.192 3.003-3.327 5.462-6.39 7.376-9.186 2.885-4.181 5.314-8.421 7.287-12.72-1.296-2.915-2.709-7.14-4.24-12.675-1.207-4.299-2.267-9.422-3.18-15.37H314c-.5.707-1.384 1.59-2.65 2.65-1.531 1.031-2.679 1.546-3.445 1.546-.147-.058-.22-.176-.22-.353 0-.118.529-.942 1.589-2.473l1.767-3.003c1.178-2.12 2.297-4.726 3.357-7.818a63.061 63.061 0 001.899-6.89c.5-2.296.971-5.373 1.413-9.23.177-.588.471-.971.883-1.148.265-.206.898-.31 1.899-.31zm-28.574.177h1.899v8.258h2.12a9.918 9.918 0 004.637-1.148l.265-.044c.147 0 .236.132.265.397v.045c0 1.53-1.104 2.811-3.312 3.842-.795.324-1.723.486-2.783.486h-1.192V34.54h3.842a53.249 53.249 0 005.521-11.262c.589-1.501 1.148-3.415 1.678-5.741.353-1.266.957-1.9 1.811-1.9 1.384 0 2.326.03 2.826.089 0 1.502-.441 3.99-1.325 7.464-.854 2.738-1.81 5.182-2.87 7.331a79.06 79.06 0 01-2.164 3.975v.044c1.354 0 2.826-.383 4.416-1.148a.832.832 0 01.265-.044c.206 0 .309.147.309.441 0 1.443-1.03 2.694-3.091 3.754-.854.383-1.693.575-2.518.575h-1.766c-.118.058-.501.559-1.149 1.501-1.148 1.56-2.959 3.636-5.432 6.227-.029 0-.103.074-.221.221H305.3c1.236 0 2.031.618 2.385 1.855.029.206.044.398.044.574v.044c0 .825-.28 1.487-.839 1.988-.56.795-2.459 2.87-5.698 6.227-2.208 2.385-3.371 3.857-3.489 4.416-.412.795-.618 2.15-.618 4.064v.618c3.916-1.119 7.994-2.517 12.234-4.196 2.061-.854 3.194-1.28 3.4-1.28h.044c.383 0 .604.176.663.53v.176c0 .56-.824 1.28-2.473 2.164-.736.5-1.944 1.178-3.622 2.032-2.679 1.472-5.991 2.9-9.937 4.284-.206.03-.309.073-.309.132 0 .619.015 1.046.044 1.281 0 5.212-.427 8.642-1.281 10.29-1.118 2.797-3.724 5.197-7.817 7.2-1.089.559-1.722.838-1.899.838H286c-.442-.058-.663-.25-.663-.574v-.088c0-.265.206-.515.618-.75 2.503-1.944 4.211-4.373 5.124-7.288.647-1.943.971-5.094.971-9.451-5.005 1.266-9.76 1.899-14.265 1.899v-2.12c0-1.001.53-1.649 1.59-1.943.618-.148 1.987-.28 4.107-.398 3.092-.353 5.771-.78 8.038-1.28 0-.03.177-.06.53-.089v-.84c0-3.444.383-5.74 1.148-6.889.354-.854 2.076-2.959 5.168-6.315 1.236-1.296 2.208-2.459 2.915-3.49h-11.218c-.118 0-.53.325-1.237.972-.059 0-.603.427-1.634 1.281-4.299 3.062-7.685 4.961-10.158 5.697-.383-.03-.574-.191-.574-.485v-.133c0-.236.427-.604 1.281-1.104a404.152 404.152 0 003.754-2.96 109.63 109.63 0 003.621-3.223h.045v-.044c-.442-.03-.781-.044-1.016-.044h-6.316c.088-.825.589-1.708 1.502-2.65.706-.619 1.428-.928 2.164-.928h7.243c1.855-1.943 3.459-3.813 4.814-5.609a116.23 116.23 0 001.722-2.296v-.044h-17.842c0-.678.53-1.532 1.59-2.562.795-.677 1.545-1.016 2.252-1.016h7.508V22.616h-8.259v-.133c0-.618.574-1.472 1.723-2.561.765-.59 1.531-.884 2.296-.884h4.24v-1.766c0-3.416.721-5.506 2.164-6.272.324-.147.648-.22.972-.22zm27.691 15.943c-.883 2.738-1.855 5.064-2.915 6.978-.029 0-.235.353-.618 1.06h.044c1.266 0 2.105.53 2.517 1.59 1.09 5.594 2.047 10.276 2.871 14.044.913 3.651 1.752 6.654 2.517 9.01h.045c1.177-3.062 2.267-6.743 3.268-11.041.589-2.503 1.133-5.565 1.634-9.186.559-4.74.839-8.819.839-12.234.029 0 .044-.074.044-.221h-10.246zM376.244 11.221h18.328c2.562 0 4.049.221 4.461.663.589.294 1.075.986 1.458 2.075.235 1.002.588 2.65 1.059 4.947.766 2.68 1.62 4.99 2.562 6.934 1.031 2.15 2.429 4.446 4.196 6.89 1.236 1.678 3.003 3.695 5.299 6.05a188.97 188.97 0 003.048 2.915c.265.206.397.383.397.53v.132c-.117.354-.294.53-.53.53h-.132c-.177 0-1.222-.5-3.136-1.501-1.56-.884-3.224-2.047-4.99-3.49-2.297-2.03-3.902-3.65-4.814-4.857-2.003-2.562-3.328-4.579-3.975-6.051-.913-1.56-1.796-3.695-2.65-6.404a110.976 110.976 0 01-.972-3.93c-.353-.854-.751-1.4-1.192-1.635a6.87 6.87 0 00-.663-.176c-.854.03-1.487.044-1.899.044h-13.205c-.501 0-1.163-.015-1.987-.044-.619 0-1.178.412-1.679 1.236-.265.707-.603 2.002-1.015 3.887-.678 2.267-1.473 4.328-2.385 6.183-.854 1.737-1.973 3.577-3.357 5.52-.795 1.149-2.002 2.533-3.621 4.152-1.679 1.62-3.254 2.959-4.726 4.019-2.385 1.531-4.269 2.547-5.653 3.047h-.133c-.294 0-.471-.206-.53-.618 0-.206.383-.633 1.149-1.28 2.561-2.445 4.225-4.138 4.99-5.08 4.181-4.858 7.052-9.716 8.612-14.574.413-1.03.884-2.93 1.414-5.697.206-1.178.515-2.135.927-2.871.353-.589.913-1.016 1.678-1.28.619-.178 1.841-.266 3.666-.266zm23.805 20.89h.221c.088.03.132.118.132.265v.177c0 1.413-.809 2.59-2.429 3.533-.913.5-1.943.75-3.091.75h-25.086v-.088c0-.795.559-1.722 1.678-2.782.648-.471 1.252-.707 1.811-.707h20.89c2.297 0 4.137-.353 5.521-1.06.176-.058.294-.088.353-.088zm14.133 17.71h.088c.088 0 .162.147.221.442 0 1.178-.677 2.282-2.032 3.312-1.06.648-2.252.972-3.577.972h-29.767c-3.504 10.393-6.64 18.107-9.407 23.142a53.711 53.711 0 01-2.606 4.02c1.354-.09 13.338-.678 35.95-1.767-1.619-2.503-2.988-5.27-4.107-8.303-.589-1.502-1.193-3.534-1.811-6.095-.412-2.09-.618-3.445-.618-4.063h2.605c.207 0 .457-.015.751-.044.589 0 1.119.5 1.59 1.501.353.854.677 2.179.972 3.975.971 3.65 2.061 6.787 3.268 9.407 1.03 2.355 2.444 4.77 4.24 7.243.648.942 1.56 1.987 2.738 3.136.559.53 1.31 1.163 2.252 1.899l.089.176c-.089.413-.265.619-.53.619h-.044c-1.531-.265-3.357-1.178-5.477-2.739-.854-.647-1.973-1.722-3.356-3.224l-42.84 2.165c-1.355-.236-2.032-.854-2.032-1.855 0-.442.368-1.09 1.104-1.944a45.23 45.23 0 003.887-6.183c2.62-4.946 5.226-11.968 7.817-21.066h-17.798c0-.618.382-1.399 1.148-2.341.795-.824 1.619-1.237 2.473-1.237h49.156c1.972 0 3.754-.368 5.343-1.104a.987.987 0 01.31-.044zM10.3.057h10.301v31.547h-10.3V.057zM60.399 67.453h10.3V99H60.4V67.453zM10.3 35.906h10.301V99h-10.3V35.906z"></path>
-      <path d="M30.902 10.572v10.516H0V10.572h30.902zM60.399.057h10.3V63.15H60.4V.057zM81 88.484V99H60.399V88.484H81z"></path>
-      <path fill-rule="evenodd" d="M60.399 83.23v.948l.46-.403-.46-.546z" clip-rule="evenodd"></path>
-      <path d="M20.601 35.91v15.633l14.159 15.91h10.91L60.4 11.705V.057h-7.576L38.15 55.34 20.6 35.911z"></path>
-    </svg>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about">关于我们</a></li>
-      <li><a href="#history">历史</a></li>
-      <li><a href="#vision">异象</a></li>
-      <li><a href="#team">同工</a></li>
-      <li><a href="#fellowship">团契</a></li>
-      <li><a href="#newcomer">新人指南</a></li>
-    </ul>
-    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
-    <svg class="logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M127.281 45H171.8v134.526h-44.519V45zM340.2 331.474h44.52V466H340.2V331.474zM127.281 197.915H171.8V466h-44.519V197.915z"></path>
-      <path d="M215.352 89.52v45.487H83.729V89.519h131.623zM340.2 45H384.72v269.053H340.2V45zM428.271 421.48V466H340.2v-44.52h88.071z"></path>
-      <path fill-rule="evenodd" d="M340.2 399.221v3.871l1.936-1.643-1.936-2.228z" clip-rule="evenodd"></path>
-      <path d="M171.8 197.399v66.447l59.91 67.628h46.167L340.2 94.514V45h-32.058l-62.087 234.992-74.255-82.593z"></path>
-    </svg>
-    <h1>米兰华人基督教会</h1>
-    <p class="subtitle">在米兰，一起认识爱</p>
-    <div class="cta-group">
-      <a href="#fellowship" class="cta-btn cta-primary">主日聚会时间</a>
-      <a href="#newcomer" class="cta-btn cta-secondary">我是第一次来</a>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section class="section" id="about">
-    <h2 class="section-title">关于我们</h2>
-    <p class="section-subtitle">一个在米兰扎根、以爱相连的华人基督徒群体</p>
-    <p class="about-content">
-      米兰华人基督教会成立于2005年，是一间以圣经为基础、以基督为中心的华人教会。
-      我们致力于在异国他乡为华人信徒提供一个属灵的家，同时欢迎每一位寻求真理的朋友。
-      无论你是否已经认识基督，我们都诚挚地邀请你来认识这份爱。
-    </p>
-    <div class="values-grid">
-      <div class="value-card">
-        <div class="icon">🙏</div>
-        <h3>敬拜</h3>
-        <p>以心灵和诚实敬拜神</p>
-      </div>
-      <div class="value-card">
-        <div class="icon">❤️</div>
-        <h3>团契</h3>
-        <p>彼此相爱、互相扶持</p>
-      </div>
-      <div class="value-card">
-        <div class="icon">🌍</div>
-        <h3>宣教</h3>
-        <p>将福音传到地极</p>
-      </div>
-      <div class="value-card">
-        <div class="icon">🤝</div>
-        <h3>服事</h3>
-        <p>以恩赐服事众人</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- History -->
-  <section class="section" id="history">
-    <h2 class="section-title">教会历史</h2>
-    <p class="section-subtitle">从几个人的小聚会到今天的大家庭</p>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="content">
-          <h3>创立初期</h3>
-          <p>几位在米兰留学的弟兄姊妹开始家庭聚会，一起查经祷告</p>
-        </div>
-        <span class="year">2005</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
-          <h3>正式成立</h3>
-          <p>聚会人数增长，正式成立米兰华人基督教会</p>
-        </div>
-        <span class="year">2007</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
-          <h3>第一位全职传道人</h3>
-          <p>教会迎接第一位全职传道人，开始系统性牧养</p>
-        </div>
-        <span class="year">2010</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
-          <h3>青年团契成立</h3>
-          <p>年轻一代的事工蓬勃发展，青年团契正式成立</p>
-        </div>
-        <span class="year">2013</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
-          <h3>新堂落成</h3>
-          <p>搬入新的聚会场地，可容纳更多弟兄姊妹</p>
-        </div>
-        <span class="year">2018</span>
-      </div>
-      <div class="timeline-item">
-        <div class="content">
-          <h3>差派宣教</h3>
-          <p>开始支持海外宣教事工，扩展神国度的视野</p>
-        </div>
-        <span class="year">2022</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Vision -->
-  <section class="vision-section" id="vision">
-    <h2 class="section-title">教会异象</h2>
-    <p class="section-subtitle">我们所追求的方向</p>
-    <blockquote class="vision-quote">
-      "成为一座灯台，在米兰这座城市中发光。
-      让每一位走进这里的华人，都能找到家的温暖，
-      认识那位创造天地的主，经历生命的改变。"
-    </blockquote>
-    <p class="vision-verse">— 以赛亚书 60:1 "兴起，发光！因为你的光已经来到"</p>
-  </section>
-
-  <!-- Team -->
-  <section class="section" id="team">
-    <h2 class="section-title">教会同工</h2>
-    <p class="section-subtitle">同心服事，彼此配搭</p>
-    <div class="team-leader">
-      <div class="avatar">👤</div>
-      <h3>张牧师</h3>
-      <p class="role">主任牧师</p>
-    </div>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="avatar">👤</div>
-        <h3>李弟兄</h3>
-        <p class="role">副牧师</p>
-      </div>
-      <div class="team-card">
-        <div class="avatar">👤</div>
-        <h3>王姊妹</h3>
-        <p class="role">传道同工</p>
-      </div>
-      <div class="team-card">
-        <div class="avatar">👤</div>
-        <h3>陈弟兄</h3>
-        <p class="role">敬拜组长</p>
-      </div>
-      <div class="team-card">
-        <div class="avatar">👤</div>
-        <h3>林姊妹</h3>
-        <p class="role">儿童主日学</p>
-      </div>
-      <div class="team-card">
-        <div class="avatar">👤</div>
-        <h3>黄弟兄</h3>
-        <p class="role">青年团契</p>
-      </div>
-      <div class="team-card">
-        <div class="avatar">👤</div>
-        <h3>周姊妹</h3>
-        <p class="role">行政事务</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Fellowship Carousel -->
-  <section class="fellowship-section" id="fellowship">
-    <h2 class="section-title">团契与小组</h2>
-    <p class="section-subtitle">找到属于你的小组，一起成长</p>
-    <div class="carousel-wrapper">
-      <button class="carousel-btn carousel-prev" onclick="scrollCarousel(-1)">‹</button>
-      <div class="carousel-track" id="carouselTrack">
-        <div class="fellowship-card">
-          <h3>主日崇拜</h3>
-          <div class="time">每周日 10:00 - 12:00</div>
-          <p>全体弟兄姊妹一起敬拜神、聆听神的话语。设有儿童主日学。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>青年团契</h3>
-          <div class="time">每周六 19:00 - 21:00</div>
-          <p>18-35岁的年轻人，一起查经、分享生活、彼此鼓励。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>夫妻小组</h3>
-          <div class="time">每月第一、三周五 19:30</div>
-          <p>已婚夫妇一起学习经营合神心意的家庭。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>祷告会</h3>
-          <div class="time">每周三 20:00 - 21:30</div>
-          <p>一起为教会、为弟兄姊妹、为世界代祷。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>查经班</h3>
-          <div class="time">每周四 19:30 - 21:00</div>
-          <p>深入研读圣经，扎根神的话语。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>儿童主日学</h3>
-          <div class="time">每周日 10:00 - 11:30</div>
-          <p>3-12岁儿童，在游戏中认识神。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>姐妹小组</h3>
-          <div class="time">每月第二、四周六 15:00</div>
-          <p>姐妹们一起分享、祷告、互相支持。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>弟兄小组</h3>
-          <div class="time">每月第二、四周六 15:00</div>
-          <p>弟兄们一起学习做属灵的领袖。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>新人接待</h3>
-          <div class="time">每月第一个主日</div>
-          <p>欢迎第一次来教会的朋友，介绍教会、解答疑问。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>诗班</h3>
-          <div class="time">每周日 09:00 - 09:45</div>
-          <p>用歌声赞美神，参与主日崇拜献诗。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>关怀探访</h3>
-          <div class="time">不定期</div>
-          <p>探访有需要的弟兄姊妹，送去教会的温暖。</p>
-        </div>
-        <div class="fellowship-card">
-          <h3>意大利语查经</h3>
-          <div class="time">每周二 19:00 - 20:30</div>
-          <p>用意大利语查经，帮助弟兄姊妹融入本地社区。</p>
-        </div>
-      </div>
-      <button class="carousel-btn carousel-next" onclick="scrollCarousel(1)">›</button>
-    </div>
-  </section>
-
-  <!-- Newcomer -->
-  <section class="section" id="newcomer">
-    <h2 class="section-title">新人指南</h2>
-    <p class="section-subtitle">第一次来？我们很期待见到你</p>
-    <div class="newcomer-content">
-      <div class="newcomer-guide">
-        <h3>你需要知道的</h3>
-        <ul>
-          <li>主日崇拜时间：每周日 10:00 - 12:00</li>
-          <li>穿着随意，不需要特别正式</li>
-          <li>有免费停车位</li>
-          <li>3-12岁儿童有主日学</li>
-          <li>不认识圣经也没关系，会有人引导你</li>
-          <li>聚会后有茶点时间，欢迎留下来交流</li>
-        </ul>
-      </div>
-      <div class="contact-form">
-        <h3>提前告诉我们你要来</h3>
-        <form onsubmit="alert('感谢你的留言！我们会尽快联系你。'); return false;">
-          <div class="form-group">
-            <label>你的名字</label>
-            <input type="text" placeholder="怎么称呼你？" required>
-          </div>
-          <div class="form-group">
-            <label>联系方式（微信或电话）</label>
-            <input type="text" placeholder="方便我们联系你" required>
-          </div>
-          <div class="form-group">
-            <label>有什么想问的？（选填）</label>
-            <textarea placeholder="比如：可以带孩子来吗？需要准备什么？"></textarea>
-          </div>
-          <button type="submit" class="submit-btn">提交</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-grid">
-      <div>
-        <h4>聚会地点</h4>
-        <p>Via Example 123, 20100 Milano MI</p>
-        <p>交通：地铁 M2 线 XX 站，步行 5 分钟</p>
-        <div class="map-placeholder">Google Maps 嵌入区域</div>
-      </div>
-      <div>
-        <h4>聚会时间</h4>
-        <p>主日崇拜：每周日 10:00 - 12:00</p>
-        <p>祷告会：每周三 20:00 - 21:30</p>
-        <p>青年团契：每周六 19:00 - 21:00</p>
-      </div>
-      <div>
-        <h4>联系我们</h4>
-        <p>邮箱：info@milanchurch.org</p>
-        <p>电话：+39 02 1234567</p>
-        <p><a href="#">Instagram</a></p>
-        <p><a href="#">微信公众号</a></p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      &copy; 2026 米兰华人基督教会 Milan Chinese Christian Church
-    </div>
-  </footer>
-
-  <script>
-    function scrollCarousel(direction) {
-      const track = document.getElementById('carouselTrack');
-      const cardWidth = track.querySelector('.fellowship-card').offsetWidth + 24;
-      track.scrollBy({ left: direction * cardWidth * 2, behavior: 'smooth' });
-    }
-  </script>
-
+  <svg class="logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M127.281 45H171.8v134.526h-44.519V45zM340.2 331.474h44.52V466H340.2V331.474zM127.281 197.915H171.8V466h-44.519V197.915z"></path>
+    <path d="M215.352 89.52v45.487H83.729V89.519h131.623zM340.2 45H384.72v269.053H340.2V45zM428.271 421.48V466H340.2v-44.52h88.071z"></path>
+    <path fill-rule="evenodd" d="M340.2 399.221v3.871l1.936-1.643-1.936-2.228z" clip-rule="evenodd"></path>
+    <path d="M171.8 197.399v66.447l59.91 67.628h46.167L340.2 94.514V45h-32.058l-62.087 234.992-74.255-82.593z"></path>
+  </svg>
+  <h1>米兰华人基督教会</h1>
+  <p class="subtitle">选择你喜欢的风格预览</p>
+  <div class="cards">
+    <a href="v1/" class="card card-v1">
+      <div class="color-bar"></div>
+      <h2>v1 · 现代清新</h2>
+      <p>海军蓝渐变，无衬线体，干净明亮的现代风格</p>
+    </a>
+    <a href="v2/" class="card card-v2">
+      <div class="color-bar"></div>
+      <h2>v2 · 温暖典雅</h2>
+      <p>米白暖色调，衬线标题，古典优雅的教堂气质</p>
+    </a>
+    <a href="v3/" class="card card-v3">
+      <div class="color-bar"></div>
+      <h2>v3 · 大胆现代</h2>
+      <p>深色背景，高对比度，年轻活力的潮流设计</p>
+    </a>
+  </div>
 </body>
 </html>
