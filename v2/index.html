@@ -91,13 +91,25 @@
     .timeline-h::-webkit-scrollbar { display: none; }
     .timeline-fade { position: relative; }
     .timeline-fade::before, .timeline-fade::after {
-      content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2;
+      content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2;
       pointer-events: none; transition: opacity 0.3s;
     }
-    .timeline-fade::before { left: 0; background: linear-gradient(to right, #FDF6EC, transparent); }
-    .timeline-fade::after { right: 0; background: linear-gradient(to left, #FDF6EC, transparent); }
+    .timeline-fade::before { left: 0; background: linear-gradient(to right, #FDF6EC 20%, transparent); }
+    .timeline-fade::after { right: 0; background: linear-gradient(to left, #FDF6EC 20%, transparent); }
     .timeline-fade.at-start::before { opacity: 0; }
     .timeline-fade.at-end::after { opacity: 0; }
+    .fade-arrow {
+      position: absolute; top: 50%; z-index: 3; width: 32px; height: 32px;
+      background: #8B3A3A; color: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; transform: translateY(-50%);
+      cursor: pointer; transition: opacity 0.3s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(139,58,58,0.3);
+    }
+    .fade-arrow:hover { transform: translateY(-50%) scale(1.1); }
+    .fade-arrow-left { left: 12px; }
+    .fade-arrow-right { right: 12px; }
+    .fade-arrow.hidden { opacity: 0; pointer-events: none; }
     .timeline-h-track {
       display: flex; gap: 0; min-width: max-content; position: relative; padding: 0 40px;
     }
@@ -335,6 +347,8 @@
     <h2 class="section-title">教会历史</h2>
     <p class="section-subtitle">从几个人的小聚会到今天的大家庭</p>
     <div class="timeline-fade at-start" id="timelineFade">
+    <div class="fade-arrow fade-arrow-left hidden" id="arrowLeft" onclick="document.getElementById('timelineH').scrollBy({left:-300,behavior:'smooth'})">‹</div>
+    <div class="fade-arrow fade-arrow-right" id="arrowRight" onclick="document.getElementById('timelineH').scrollBy({left:300,behavior:'smooth'})">›</div>
     <div class="timeline-h" id="timelineH">
       <div class="timeline-h-track">
         <div class="timeline-h-item">
@@ -563,9 +577,15 @@
   <script>
     const timeline = document.getElementById('timelineH');
     const fade = document.getElementById('timelineFade');
+    const arrowL = document.getElementById('arrowLeft');
+    const arrowR = document.getElementById('arrowRight');
     function updateFade() {
-      fade.classList.toggle('at-start', timeline.scrollLeft <= 10);
-      fade.classList.toggle('at-end', timeline.scrollLeft + timeline.clientWidth >= timeline.scrollWidth - 10);
+      const atStart = timeline.scrollLeft <= 10;
+      const atEnd = timeline.scrollLeft + timeline.clientWidth >= timeline.scrollWidth - 10;
+      fade.classList.toggle('at-start', atStart);
+      fade.classList.toggle('at-end', atEnd);
+      arrowL.classList.toggle('hidden', atStart);
+      arrowR.classList.toggle('hidden', atEnd);
     }
     timeline.addEventListener('scroll', updateFade);
     updateFade();
